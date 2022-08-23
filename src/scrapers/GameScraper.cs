@@ -1,3 +1,5 @@
+using HtmlAgilityPack;
+
 namespace gasmie.src
 {
     public class GameScraper : Scraper
@@ -7,14 +9,14 @@ namespace gasmie.src
         public override object Dig()
         {
             return new GameDto(
-                "Library", 
-                DigName(), 
-                DigImage(), 
-                DigDuration(1), 
-                DigDuration(2), 
-                DigGenres(), 
-                DigDevelopers(), 
-                DigRelease(), 
+                "Library",
+                DigName(),
+                DigImage(),
+                DigDuration(1),
+                DigDuration(2),
+                DigGenres(),
+                DigDevelopers(),
+                DigRelease(),
                 URL);
         }
 
@@ -38,20 +40,25 @@ namespace gasmie.src
 
         private string DigGenres()
         {
-            var genresNode = Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']");
-            return genresNode.Where(e => e.InnerText.Contains("Genres")).First().InnerText.Replace("Genres:", "").Replace("\n", "").Replace("\t", "").Trim();
+            var genresNode = DigNode(Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']"), "Genres");
+            return genresNode.Any() ? genresNode.First().InnerText.Replace("Genres:", "").Replace("\n", "").Replace("\t", "").Trim() : "";
         }
 
         private string DigDevelopers()
         {
-            var developersNode = Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']");
-            return developersNode.Where(e => e.InnerText.Contains("Developer")).First().InnerText.Replace("Developers:", "").Replace("Developer:", "").Replace("\n", "").Replace("\t", "").Trim();
+            var developersNode = DigNode(Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']"), "Developer");
+            return developersNode.Any() ? developersNode.First().InnerText.Replace("Developers:", "").Replace("Developer:", "").Replace("\n", "").Replace("\t", "").Trim() : "";
         }
 
         private string DigRelease()
         {
             var developersNode = Document.DocumentNode.SelectNodes("//div[@class='profile_info']");
             return developersNode.First().InnerText.Replace("\n", "").Replace("\t", "").Split(":")[1].Trim();
+        }
+
+        private static IEnumerable<HtmlNode> DigNode(HtmlNodeCollection nodes, string keyword)
+        {
+            return nodes.Where(e => e.InnerText.Contains(keyword));
         }
     }
 }
