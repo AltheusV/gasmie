@@ -12,8 +12,8 @@ namespace gasmie.src
                 "Library",
                 DigName(),
                 DigImage(),
-                DigDuration(1),
-                DigDuration(2),
+                DigDuration("Main + Extras"),
+                DigDuration("Completionist"),
                 DigGenres(),
                 DigDevelopers(),
                 DigRelease(),
@@ -32,22 +32,23 @@ namespace gasmie.src
             return nameNode.First().InnerText.Replace("\n", "").Replace("\t", "");
         }
 
-        private string DigDuration(int duration)
+        private string DigDuration(string keyword)
         {
-            var mainDurationNode = Document.DocumentNode.SelectNodes("//div[@class='game_times']/ul/li[@class='short time_100']/div");
-            return mainDurationNode[duration].InnerText.Replace("&#189;", "½").Replace("\t", "").Trim();
+            var nodes = Document.DocumentNode.SelectNodes("//div[@class='game_times']/ul/li");
+            var mainDurationNode = nodes.FirstOrDefault(n => n.InnerHtml.Contains(keyword));
+            return mainDurationNode == null ? "" : mainDurationNode.InnerText.Replace(keyword, "").Replace("&#189;", "½").Replace("\t", "").Trim();
         }
 
         private string DigGenres()
         {
             var genresNode = DigNode(Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']"), "Genres");
-            return genresNode.Any() ? genresNode.First().InnerText.Replace("Genres:", "").Replace("\n", "").Replace("\t", "").Trim() : "";
+            return genresNode == null ? "" : genresNode.InnerText.Replace("Genres:", "").Replace("\n", "").Replace("\t", "").Trim();
         }
 
         private string DigDevelopers()
         {
             var developersNode = DigNode(Document.DocumentNode.SelectNodes("//div[@class='profile_info medium']"), "Developer");
-            return developersNode.Any() ? developersNode.First().InnerText.Replace("Developers:", "").Replace("Developer:", "").Replace("\n", "").Replace("\t", "").Trim() : "";
+            return developersNode == null ? "" : developersNode.InnerText.Replace("Developers:", "").Replace("Developer:", "").Replace("\n", "").Replace("\t", "").Trim();
         }
 
         private string DigRelease()
@@ -56,9 +57,9 @@ namespace gasmie.src
             return developersNode.First().InnerText.Replace("\n", "").Replace("\t", "").Split(":")[1].Trim();
         }
 
-        private static IEnumerable<HtmlNode> DigNode(HtmlNodeCollection nodes, string keyword)
+        private static HtmlNode? DigNode(HtmlNodeCollection nodes, string keyword)
         {
-            return nodes.Where(e => e.InnerText.Contains(keyword));
+            return nodes.FirstOrDefault(e => e.InnerText.Contains(keyword));
         }
     }
 }
