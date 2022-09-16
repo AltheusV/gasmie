@@ -3,12 +3,12 @@ namespace gasmie.src
     public class ScraperGenerator
     {
         private ScraperGenerator() { }
-        public static List<Scraper> Init(List<ScraperDto> dtos)
+        public static List<Scraper> Generate(List<ScraperDto> dtos)
         {
-            return dtos.Select(dto => Init(dto)).ToList();
+            return dtos.Select(dto => Generate(dto)).ToList();
         }
 
-        public static Scraper Init(ScraperDto dto)
+        private static Scraper Generate(ScraperDto dto)
         {
             return dto.Mode switch
             {

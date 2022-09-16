@@ -1,7 +1,6 @@
 namespace gasmie.src.data
 {
     public class StreamingDto
-
     {
         public string Type { get; init; }
         public string Name { get; init; }
@@ -29,6 +28,11 @@ namespace gasmie.src.data
             Genres = genres;
             Duration = duration;
             URL = url;
+        }
+
+        public override string ToString()
+        {
+            return "streaming";
         }
     }
 }

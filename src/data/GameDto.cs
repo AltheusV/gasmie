@@ -33,5 +33,10 @@ namespace gasmie.src
             Release = release;
             URL = url;
         }
+        
+        public override string ToString()
+        {
+            return "games";
+        }
     }
 }
