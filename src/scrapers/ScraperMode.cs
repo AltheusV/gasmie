@@ -5,6 +5,7 @@ namespace gasmie.src
         ANIME,
         GAME,
         MOVIE,
-        TVSERIES
+        TVSERIES,
+        NONE
     }
 }
