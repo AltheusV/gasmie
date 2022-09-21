@@ -9,6 +9,3 @@ var scrapers = ScraperGenerator.Generate(dtos);
 var listScrapers = scrapers.GroupBy(s => s.ToString()).ToList();
 var listDtos = listScrapers.Select(l => l.Select(s => s.Dig()).ToList()).ToList();
 listDtos.ForEach(l => CsvGenerator.Generate(l));
-
-
-

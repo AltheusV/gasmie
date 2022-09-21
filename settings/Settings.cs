@@ -8,7 +8,7 @@ namespace gasmie.settings
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
             .AddJsonFile(
-                Path.Combine(Environment.CurrentDirectory, "settings", "appsettings.json")
+                Path.Combine("settings", "appsettings.json")
                 , false
                 , true
             );
@@ -19,9 +19,9 @@ namespace gasmie.settings
         public static (string, string, string) GetNotionConnectionStrings()
         {
             var settings = Setup();
-            return (settings["ConnectionStrings:NotionUrl"]
-                , settings["ConnectionStrings:NotionDatabaseId"]
-                , settings["ConnectionStrings:NotionKey"]
+            return (settings.GetConnectionString("NotionUrl")
+                , settings.GetConnectionString("NotionDatabaseId")
+                , settings.GetConnectionString("NotionKey")
             );
         }
     }

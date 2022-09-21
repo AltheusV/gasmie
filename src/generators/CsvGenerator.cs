@@ -7,14 +7,16 @@ namespace gasmie.src
     {
         public static void Generate(List<object> dto)
         {
-            var path = Path.Combine(
-                Environment.CurrentDirectory
-                , $"src/files/{dto.First()}"
-                , $"{DateTime.Now.ToFileTime()}.csv");
-
-            using var writer = new StreamWriter(path);
+            using var writer = new StreamWriter(CreatePath(dto.First()));
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             csv.WriteRecords(dto);
+        }
+
+        private static string CreatePath(object dto)
+        {
+            var path = $"files/{dto}";
+            Directory.CreateDirectory(path);
+            return Path.Combine(path, $"{DateTime.Now.ToFileTime()}.csv");
         }
     }
 }

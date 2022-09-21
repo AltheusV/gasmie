@@ -16,4 +16,10 @@
     <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="settings/appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
