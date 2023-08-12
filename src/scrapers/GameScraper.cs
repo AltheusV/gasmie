@@ -4,10 +4,14 @@ namespace gasmie.src
 {
     public class GameScraper : Scraper
     {
-        private const string NAME_AND_IMAGE_NODE = "//div[@class='GameSideBar_game_image__pMeFK mobile_hide']/img";
-        private const string DURATION_NODE = "//div[@class='GameStats_game_times__5LFEc']/ul/li";
-        private const string GENRES_AND_DEVELOPERS_NODE = "//div[@class='GameSummary_profile_info__e935c GameSummary_medium__5cP8Y']";
-        private const string RELEASE_NODE = "//div[@class='GameSummary_profile_info__e935c']";
+        private const string NAME_AND_IMAGE_CODE = "ozUTt";
+        private static readonly string NAME_AND_IMAGE_NODE = $"//div[@class='GameSideBar_game_image__{NAME_AND_IMAGE_CODE} mobile_hide']/img";
+        private const string DURATION_CODE = "KHrRY";
+        private static readonly string DURATION_NODE = $"//div[@class='GameStats_game_times__{DURATION_CODE} shadow_shadow']/ul/li";
+        private const string GENRES_AND_DEVELOPERS_CODE = "HZFQu";
+        private static readonly string GENRES_AND_DEVELOPERS_NODE = $"//div[@class='GameSummary_profile_info__{GENRES_AND_DEVELOPERS_CODE} GameSummary_medium___r_ia']";
+        private const string RELEASE_CODE = "HZFQu";
+        private static readonly string RELEASE_NODE = $"//div[@class='GameSummary_profile_info__{RELEASE_CODE}']";
 
         public GameScraper(string url) : base(url) { }
 
@@ -30,7 +34,7 @@ namespace gasmie.src
         private string[] DigNameAndImage()
         {
             string[] nameAndImage = { "", "" };
-            
+
             var nameAndImageNode = Document.DocumentNode.SelectNodes(NAME_AND_IMAGE_NODE);
             if (nameAndImageNode is not null)
             {
@@ -38,6 +42,7 @@ namespace gasmie.src
                 nameAndImage[0] = FormatString(outerHtml[1], new string[] { "Box Art" }).Replace("&#x27;", "'");
                 nameAndImage[1] = outerHtml[3];
             }
+
             return nameAndImage;
         }
 
