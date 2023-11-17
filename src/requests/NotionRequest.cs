@@ -54,7 +54,7 @@ namespace gasmie.src.notion
 
                 if (url.Equals("") || name.Equals(ScraperMode.NONE))
                 {
-                    Console.WriteLine("One of your Notion data on database could not be loaded.");
+                    Console.WriteLine("One of your Notion data on database could not be loaded. Check the URL or the ScraperMode");
                     continue;
                 }
 
