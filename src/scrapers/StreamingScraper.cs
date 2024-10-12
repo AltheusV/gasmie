@@ -25,7 +25,7 @@ namespace gasmie.src
 
         private string DigImage()
         {
-            var imageNode = Document.DocumentNode.SelectNodes("//div[@class='title-poster title-poster--no-radius-bottom']/picture[@class='picture-comp title-poster__image']/img");
+            var imageNode = Document.DocumentNode.SelectNodes("//span[@class='title-poster title-poster--no-radius-bottom']/picture[@class='picture-comp title-poster__image']/img");
             return imageNode is null ? "" : $"{imageNode[0].OuterHtml.Split(" ")[3].Replace("\"", "").Replace("data-src=", "")}.jpg";
         }
 
